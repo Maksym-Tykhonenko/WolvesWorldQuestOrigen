@@ -392,7 +392,7 @@ const App = () => {
             const adServicesAttributionData =
               await fetchAdServicesAttributionData();
             const attribution = adServicesAttributionData?.attribution || 'asa'; // Якщо attribution немає, встановлюємо 'aca'
-            setSab1(attribution ? 'asa' : ''); // Записуємо в стейт
+            setSab1(attribution); // Записуємо в стейт
             // setSab1(attribution ? 'asa' : '');
           }
         } else {
