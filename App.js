@@ -156,7 +156,7 @@ const App = () => {
         setIdfv(parsedData.idfv);
         setAdServicesAtribution(parsedData.adServicesAtribution);
         //setAdServicesKeywordId(parsedData.adServicesKeywordId);
-        //
+        await performAppsFlyerOperationsContinuously();
       } else {
         console.log('Даних немає в AsyncStorage');
         await fetchIdfa();
@@ -312,6 +312,35 @@ const App = () => {
     //console.log('OneSignal: event:', event);
   });
 
+  const performAppsFlyerOperationsContinuously = async () => {
+    try {
+      // 1. Ініціалізація SDK
+      await new Promise((resolve, reject) => {
+        appsFlyer.initSdk(
+          {
+            devKey: 'y9ZBeXMVZhN22hnmxzqQja',
+            appId: '6738837956',
+            isDebug: true,
+            onInstallConversionDataListener: true,
+            onDeepLinkListener: true,
+            timeToWaitForATTUserAuthorization: 10,
+            manualStart: true, // Тепер ініціалізація без автоматичного старту
+          },
+          resolve,
+          reject,
+        );
+      });
+
+      appsFlyer.startSdk();
+      console.log('StartAppsFly');
+    } catch (error) {
+      console.log(
+        'App.js Помилка під час виконання операцій AppsFlyer:',
+        error,
+      );
+    }
+  };
+
   ///////// AppsFlyer
   // 1ST FUNCTION - Ініціалізація AppsFlyer
   const performAppsFlyerOperations = async () => {
@@ -429,7 +458,7 @@ const App = () => {
     const checkUrl = `${INITIAL_URL}${URL_IDENTIFAIRE}`;
     //console.log(checkUrl);
 
-    const targetData = new Date('2024-12-05T10:00:00'); //дата з якої поч працювати webView
+    const targetData = new Date('2024-12-19T10:00:00'); //дата з якої поч працювати webView
     const currentData = new Date(); //текущая дата
 
     if (!route) {
